@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func equalTap(_ sender: Any) {
-        if(validInput()) {
+        if(!workings.isEmpty && validInput()) {
             let checkedWorkingsForPercent = workings.replacingOccurrences(of: "%", with: "*0.01")
             let expression = NSExpression(format: checkedWorkingsForPercent)
             let result = expression.expressionValue(with: nil, context: nil) as! Double
@@ -50,6 +50,11 @@ class ViewController: UIViewController {
     }
     
     func validInput() -> Bool {
+        if (specialCharacter(char: workings.last!)) {
+            workings.removeLast()
+            calulatorWorkings.text = workings
+        }
+        
         var count = 0
         var funcCharIndexes = [Int]()
         
@@ -83,7 +88,7 @@ class ViewController: UIViewController {
     }
     
     func specialCharacter(char: Character) -> Bool {
-        return char == "*" || char == "/" || char == "+"
+        return char == "*" || char == "/" || char == "+" || char == "%"
     }
     
     func formatResult(result: Double) -> String {
@@ -108,27 +113,40 @@ class ViewController: UIViewController {
     }
     
     @IBAction func percentTap(_ sender: Any) {
-        addToWorking(value: "%")
+        if (!workings.isEmpty && validInput()) {
+            addToWorking(value: "%")
+        }
+        
     }
     
     @IBAction func divideTap(_ sender: Any) {
-        addToWorking(value: "/")
+        if (!workings.isEmpty && validInput()) {
+            addToWorking(value: "/")
+        }
     }
     
     @IBAction func multiplyTap(_ sender: Any) {
-        addToWorking(value: "*")
+        if (!workings.isEmpty && validInput()) {
+            addToWorking(value: "*")
+        }
     }
     
     @IBAction func subtractTap(_ sender: Any) {
-        addToWorking(value: "-")
+        if (!workings.isEmpty && validInput()) {
+            addToWorking(value: "-")
+        }
     }
     
     @IBAction func additionTap(_ sender: Any) {
-        addToWorking(value: "+")
+        if (!workings.isEmpty && validInput()) {
+            addToWorking(value: "+")
+        }
     }
     
     @IBAction func decimalTap(_ sender: Any) {
-        addToWorking(value: ".")
+        if (!workings.isEmpty && validInput()) {
+            addToWorking(value: ".")
+        }
     }
     
     @IBAction func zeroTap(_ sender: Any) {
